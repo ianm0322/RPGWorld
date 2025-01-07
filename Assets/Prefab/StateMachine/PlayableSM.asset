@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9de12c4bd0c3754c9aa0be24b1dbca2, type: 3}
+  m_Name: PlayableSM
+  m_EditorClassIdentifier: 
+  States:
+    StateIdle: {fileID: 11400000, guid: 63813e858ea8fff4d81d64e1b7b13a7f, type: 2}
+    StateMove: {fileID: 11400000, guid: db4fcad53074807459b114c83c5e9e0d, type: 2}
+    StateJump: {fileID: 11400000, guid: 1b5217bcf8cda6d45bc8cd6a25f90b35, type: 2}
+    StateAttack1: {fileID: 11400000, guid: 318172196d4c37146a38a2b657e7032a, type: 2}
+    StateAttack2: {fileID: 11400000, guid: 1e6749ef45d4c68498a243a91ad52aa0, type: 2}
+    StateAttack3: {fileID: 11400000, guid: 4a811236f9813d84dbbf8b1422197538, type: 2}
+    StateHurt: {fileID: 11400000, guid: 326bd17b9534ba14fa01fc383f1dd93d, type: 2}
+  ConstraintTable:
+    ConstraintTable:
+    - StartState: {fileID: 11400000, guid: 63813e858ea8fff4d81d64e1b7b13a7f, type: 2}
+      Constraints:
+      - DestinationState: {fileID: 11400000, guid: db4fcad53074807459b114c83c5e9e0d, type: 2}
+        Constraint: {fileID: 11400000, guid: 24e005169997cac49b5c114493103f44, type: 2}
+      - DestinationState: {fileID: 11400000, guid: 1b5217bcf8cda6d45bc8cd6a25f90b35, type: 2}
+        Constraint: {fileID: 11400000, guid: b33a4d2bd46ce264596c39553f227678, type: 2}
+      - DestinationState: {fileID: 11400000, guid: 318172196d4c37146a38a2b657e7032a, type: 2}
+        Constraint: {fileID: 11400000, guid: 3cb677aabc0332b47b5310a5067847e2, type: 2}
+      - DestinationState: {fileID: 11400000, guid: 1e6749ef45d4c68498a243a91ad52aa0, type: 2}
+        Constraint: {fileID: 11400000, guid: 03ff75d317907824e8f79f9f858ff00f, type: 2}
+      - DestinationState: {fileID: 11400000, guid: 4a811236f9813d84dbbf8b1422197538, type: 2}
+        Constraint: {fileID: 11400000, guid: 151f23f3098f82542b913db1eaa114b5, type: 2}
+    - StartState: {fileID: 11400000, guid: db4fcad53074807459b114c83c5e9e0d, type: 2}
+      Constraints:
+      - DestinationState: {fileID: 11400000, guid: 63813e858ea8fff4d81d64e1b7b13a7f, type: 2}
+        Constraint: {fileID: 11400000, guid: a875fc901488edb46ac87c45516d3bb6, type: 2}
+      - DestinationState: {fileID: 11400000, guid: 1b5217bcf8cda6d45bc8cd6a25f90b35, type: 2}
+        Constraint: {fileID: 11400000, guid: b33a4d2bd46ce264596c39553f227678, type: 2}
+      - DestinationState: {fileID: 11400000, guid: 318172196d4c37146a38a2b657e7032a, type: 2}
+        Constraint: {fileID: 11400000, guid: 3cb677aabc0332b47b5310a5067847e2, type: 2}
+      - DestinationState: {fileID: 11400000, guid: 1e6749ef45d4c68498a243a91ad52aa0, type: 2}
+        Constraint: {fileID: 11400000, guid: 03ff75d317907824e8f79f9f858ff00f, type: 2}
+      - DestinationState: {fileID: 11400000, guid: 4a811236f9813d84dbbf8b1422197538, type: 2}
+        Constraint: {fileID: 11400000, guid: 151f23f3098f82542b913db1eaa114b5, type: 2}
+    - StartState: {fileID: 11400000, guid: 1b5217bcf8cda6d45bc8cd6a25f90b35, type: 2}
+      Constraints:
+      - DestinationState: {fileID: 11400000, guid: 63813e858ea8fff4d81d64e1b7b13a7f, type: 2}
+        Constraint: {fileID: 11400000, guid: 3921755130b17784fb86da782132ffb3, type: 2}
+    - StartState: {fileID: 11400000, guid: 318172196d4c37146a38a2b657e7032a, type: 2}
+      Constraints:
+      - DestinationState: {fileID: 11400000, guid: 63813e858ea8fff4d81d64e1b7b13a7f, type: 2}
+        Constraint: {fileID: 11400000, guid: 8952ca0ff0ad3ce48a7fb8a224bc776b, type: 2}
+    - StartState: {fileID: 11400000, guid: 1e6749ef45d4c68498a243a91ad52aa0, type: 2}
+      Constraints:
+      - DestinationState: {fileID: 11400000, guid: 63813e858ea8fff4d81d64e1b7b13a7f, type: 2}
+        Constraint: {fileID: 11400000, guid: 8952ca0ff0ad3ce48a7fb8a224bc776b, type: 2}
+    - StartState: {fileID: 11400000, guid: 4a811236f9813d84dbbf8b1422197538, type: 2}
+      Constraints:
+      - DestinationState: {fileID: 11400000, guid: 63813e858ea8fff4d81d64e1b7b13a7f, type: 2}
+        Constraint: {fileID: 11400000, guid: 8952ca0ff0ad3ce48a7fb8a224bc776b, type: 2}
+    - StartState: {fileID: 11400000, guid: 326bd17b9534ba14fa01fc383f1dd93d, type: 2}
+      Constraints:
+      - DestinationState: {fileID: 11400000, guid: 63813e858ea8fff4d81d64e1b7b13a7f, type: 2}
+        Constraint: {fileID: 11400000, guid: 4a102fb2fce9c124da0f136ca344f4e4, type: 2}
+  AnyStateConstraint:
+  - DestinationState: {fileID: 11400000, guid: 326bd17b9534ba14fa01fc383f1dd93d, type: 2}
+    Constraint: {fileID: 11400000, guid: e62991ffc5f55ea4087117ee0edc41b5, type: 2}

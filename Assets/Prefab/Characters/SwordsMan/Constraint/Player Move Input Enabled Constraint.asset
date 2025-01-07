@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0af7e733ebfcef408fa924d29b8a668, type: 3}
+  m_Name: Player Move Input Enabled Constraint
+  m_EditorClassIdentifier: 
+  _bindingInputAsset: {fileID: -944628639613478452, guid: a2342ef54d17317438760d3e0250d0e9, type: 3}
+  _inputActionKey: Move
