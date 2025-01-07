@@ -48,6 +48,8 @@ MonoBehaviour:
         Constraint: {fileID: 11400000, guid: 151f23f3098f82542b913db1eaa114b5, type: 2}
     - StartState: {fileID: 11400000, guid: 1b5217bcf8cda6d45bc8cd6a25f90b35, type: 2}
       Constraints:
+      - DestinationState: {fileID: 11400000, guid: db4fcad53074807459b114c83c5e9e0d, type: 2}
+        Constraint: {fileID: 11400000, guid: 048b71586ca432d44a63f3238e50edbf, type: 2}
       - DestinationState: {fileID: 11400000, guid: 63813e858ea8fff4d81d64e1b7b13a7f, type: 2}
         Constraint: {fileID: 11400000, guid: 3921755130b17784fb86da782132ffb3, type: 2}
     - StartState: {fileID: 11400000, guid: 318172196d4c37146a38a2b657e7032a, type: 2}

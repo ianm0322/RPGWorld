@@ -1,15 +1,23 @@
+using System.Security.Cryptography;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Player Jump State", menuName = "State Machine/Player/Jump", order = 11)]
 public class PlayerJumpStateSO : PlayerStateSO
 {
+    public PhysicsMaterial2D JumpingPM;
+
     public override void OnStateBegin(PlayerController target, PlayerStateSO previousState)
     {
-        target.AttachedRigidbody.linearVelocityY = target.Stats.JumpPower;
+        var data = GetInstanceData<InstanceData>(target);
+        data.cachedPM = target.AttachedRigidbody.sharedMaterial;
+
+        target.AttachedRigidbody.sharedMaterial = JumpingPM;
     }
 
     public override void OnStateEnd(PlayerController target, PlayerStateSO nextState)
     {
+        var data = GetInstanceData<InstanceData>(target);
+        target.AttachedRigidbody.sharedMaterial = data.cachedPM;
     }
 
     public override void PhysicsUpdateState(PlayerController target)
@@ -22,5 +30,10 @@ public class PlayerJumpStateSO : PlayerStateSO
 
     public override void UpdateState(PlayerController target)
     {
+    }
+
+    public class InstanceData
+    {
+        public PhysicsMaterial2D cachedPM;
     }
 }

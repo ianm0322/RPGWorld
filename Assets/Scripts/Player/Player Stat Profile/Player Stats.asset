@@ -20,4 +20,4 @@ MonoBehaviour:
   PlayerLayer:
     serializedVersion: 2
     m_Bits: 8
-  CollisionOffset: 0.01
+  CollisionOffset: 0.02

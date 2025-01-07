@@ -12,7 +12,7 @@ public interface IPlayerController
     public Vector2 Position { get; set; }
     public Vector2 Velocity { get; set; }
     public PlayerStateSO CurrentState { get; }
-    public PlayerStates StateTable { get; }
+    public StateMachineSO.PlayerStates StateTable { get; }
     public PlayerInputHandle InputHandle { get; }
 
     public class PlayerInputHandle
@@ -25,7 +25,6 @@ public interface IPlayerController
 
         public void Clear()
         {
-            Jump = false;
             Attack = false;
             IsHurt = false;
         }
@@ -53,13 +52,7 @@ public class PlayerController : MonoBehaviour, IPlayerController, IDamagable
 
     // ---- State Machine ----
     [SerializeField]
-    private PlayerStates _smStates;
-
-    [SerializeField]
-    private PlayerContraintTable _smConstraints;
-
-    [SerializeField]
-    private List<ConstraintData> _smAnyStateConstraint;
+    private StateMachineSO _smModel;
 
     [SerializeField]
     private PlayerStateSO _smDefaultState;
@@ -89,7 +82,7 @@ public class PlayerController : MonoBehaviour, IPlayerController, IDamagable
 
     public PlayerStateSO CurrentState => _smCurrentState;
 
-    public PlayerStates StateTable => _smStates;
+    public StateMachineSO.PlayerStates StateTable => _smModel.States;
 
     public IPlayerController.PlayerInputHandle InputHandle => _inputHandle;
     #endregion
@@ -144,14 +137,14 @@ public class PlayerController : MonoBehaviour, IPlayerController, IDamagable
     }
     private void ClearStateMachineCacheDatas()
     {
-        _smStates.RemoveInstanceDatas(this);
+        _smModel.States.RemoveInstanceDatas(this);
 
-        foreach (var constraint in _smAnyStateConstraint)
+        foreach (var constraint in _smModel.AnyStateConstraint)
         {
             constraint.Constraint.RemoveInstanceData(this);
         }
 
-        foreach (var raw in _smConstraints.ConstraintTable)
+        foreach (var raw in _smModel.ConstraintTable.ConstraintTable)
         {
             foreach (var constraint in raw.Constraints)
             {
@@ -178,11 +171,9 @@ public class PlayerController : MonoBehaviour, IPlayerController, IDamagable
             return;
         }
 
-        var constraintRaw = _smConstraints.FindTableRaw(_smCurrentState);
-
         PlayerStateSO nextState = null;
 
-        foreach (var anyConstraint in _smAnyStateConstraint)
+        foreach (var anyConstraint in _smModel.AnyStateConstraint)
         {
             if (anyConstraint.Constraint.IsValid(this))
             {
@@ -193,6 +184,7 @@ public class PlayerController : MonoBehaviour, IPlayerController, IDamagable
 
         if (nextState == null)
         {
+            var constraintRaw = _smModel.ConstraintTable.FindTableRaw(_smCurrentState);
             foreach (var constraint in constraintRaw.Constraints)
             {
                 if (constraint.Constraint.IsValid(this))
@@ -225,6 +217,8 @@ public class PlayerController : MonoBehaviour, IPlayerController, IDamagable
     {
         CheckCollision();
 
+        HandleJump();
+
         FixedUpdateStateMachine();
     }
     private void FixedUpdateStateMachine()
@@ -249,6 +243,7 @@ public class PlayerController : MonoBehaviour, IPlayerController, IDamagable
         _collider.enabled = false;
 
         bool isGround = Physics2D.CapsuleCast(_collider.bounds.center, _collider.size, _collider.direction, 0f, Vector2.down, Stats.CollisionOffset, ~Stats.PlayerLayer);
+        bool isWallHit = Physics2D.CapsuleCast(_collider.bounds.center, _collider.size, _collider.direction, 0f, Vector2.right * Mathf.Sign(_rigidbody.linearVelocityX), Stats.CollisionOffset, ~Stats.PlayerLayer);
 
         _collider.enabled = true;
 
@@ -259,6 +254,11 @@ public class PlayerController : MonoBehaviour, IPlayerController, IDamagable
         else
         {
             _isGrounded = false;
+        }
+
+        if (isWallHit && !Mathf.Approximately(_rigidbody.linearVelocityX, 0f))
+        {
+            _rigidbody.linearVelocityX = 0f;
         }
     }
     private const float TURN_DIRECTION_VALUE = 0.01f;
@@ -273,6 +273,15 @@ public class PlayerController : MonoBehaviour, IPlayerController, IDamagable
         {
             Direction = _rigidbody.linearVelocityX < 0 ? Direction1D.Left : Direction1D.Right;
         }
+    }
+    private void HandleJump()
+    {
+        if (_inputHandle.Jump && IsGrounded)
+        {
+            _rigidbody.linearVelocityY = Stats.JumpPower;
+        }
+
+        _inputHandle.Jump = false;
     }
     #endregion
 
@@ -297,51 +306,4 @@ public class PlayerController : MonoBehaviour, IPlayerController, IDamagable
         _inputHandle.AttackIndex = attackIndex;
     }
     #endregion
-
-    [System.Serializable]
-    public class PlayerStates
-    {
-        public PlayerStateSO StateIdle;
-        public PlayerStateSO StateMove;
-        public PlayerStateSO StateJump;
-        public PlayerStateSO StateAttack1;
-        public PlayerStateSO StateAttack2;
-        public PlayerStateSO StateAttack3;
-        public PlayerStateSO StateHurt;
-
-        public void RemoveInstanceDatas(PlayerController player)
-        {
-            var fields = this.GetType().GetFields();
-            foreach (var field in fields)
-            {
-                PlayerStateSO stateField = field.GetValue(this) as PlayerStateSO;
-                stateField.RemoveInstanceData(player);
-            }
-        }
-    }
-
-    [System.Serializable]
-    public class PlayerContraintTable
-    {
-        public List<ConstraintTableRaw> ConstraintTable;
-
-        public ConstraintTableRaw FindTableRaw(PlayerStateSO startState)
-        {
-            return ConstraintTable.Find((raw) => raw.StartState == startState);
-        }
-
-        [System.Serializable]
-        public class ConstraintTableRaw
-        {
-            public PlayerStateSO StartState;
-            public List<ConstraintData> Constraints;
-        }
-    }
-
-    [System.Serializable]
-    public class ConstraintData
-    {
-        public PlayerStateSO DestinationState;
-        public PlayerConstraintSO Constraint;
-    }
 }

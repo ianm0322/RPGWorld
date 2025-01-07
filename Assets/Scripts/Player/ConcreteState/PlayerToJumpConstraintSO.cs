@@ -5,7 +5,7 @@ public class PlayerToJumpConstraintSO : PlayerConstraintSO
 {
     public override bool IsValid(PlayerController target)
     {
-        if (target.InputHandle.Jump && target.IsGrounded)
+        if (!target.IsGrounded)
         {
             return true;
         }

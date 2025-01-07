@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerAnimController : MonoBehaviour
 {
-    private PlayerController.PlayerStates playerStateTable;
+    private StateMachineSO.PlayerStates playerStateTable;
 
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;

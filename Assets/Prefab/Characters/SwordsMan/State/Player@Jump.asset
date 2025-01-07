@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b328666e3278a6438af076a8c0016e0, type: 3}
   m_Name: Player@Jump
   m_EditorClassIdentifier: 
+  JumpingPM: {fileID: 6200000, guid: ae3bc01dd0e845443a9329efe3cad95b, type: 2}

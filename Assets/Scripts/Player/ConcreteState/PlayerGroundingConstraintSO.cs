@@ -5,6 +5,6 @@ public class PlayerGroundingConstraintSO : PlayerConstraintSO
 {
     public override bool IsValid(PlayerController target)
     {
-        return target.IsGrounded && target.Velocity.y < 0;
+        return target.IsGrounded;
     }
 }
